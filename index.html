@@ -10,8 +10,67 @@
       background-size: cover;
     }
   </style>
+
 </head>
 
 <body>
-  <div class="background"></div>
+
+  <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+  
+  <script>
+    
+    const flowerImages = [
+        "images/flower1.png",
+        "images/flower2.png",
+        "images/flower3.png",
+        "images/flower4.png"
+    ];
+    
+    function RandomInteger(min, max) {
+      min = Math.ciel(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    
+    function addflower () {
+      //pick a random flower
+      const randomIndex = Math.floor(Math.random() * flowerImages.length);
+      const randomFlower = flowerImages[randomIndex];
+      
+      //pick a random href for flower to link to
+      
+      const loadingImage = "url"; 
+      const growTime = RandomInteger(0, 100) * 60 * 1000; // miliseconds to minutes conversion, flower grows for 1-100 minutes
+      
+      //keep banner on screen for 10 seconds
+      setTimeout(() => banner.remove(), 10000);
+      
+      //add countdown on page
+      
+      //add flower to page depending on where user clicked
+      nn.create("img")
+        .set("src", randomFlower)
+        .addTo("body")
+        .css({
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          left: nn.mouseX - 50 + "px", //assuming flower is 100x100px
+          top: nn.mouseY - 100 + "px",
+          pointerEvents: "none"
+        })
+      
+      //after grow time remove countdown
+      
+      // after grow time, replace loading image with flower
+      setTimeout(() => {
+          flower.set("src", randomFlower);
+      }, growTime);
+      
+      //display congrats banner
+    }
+    
+    nn.on("click", addflower)
+  </script>
+  
 </body>
