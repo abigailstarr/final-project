@@ -5,7 +5,8 @@
     body {
       width: 100vw;
       height: 100vh;
-      margin: 0;
+      position: relative;
+      overflow: visible;
       background: url("garden-background.png") no-repeat center center;
       background-size: cover;
     }
@@ -30,7 +31,7 @@
     ];
     
     function RandomInteger(min, max) {
-      min = Math.ciel(min);
+      min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -60,7 +61,7 @@
           position: "absolute",
           left: nn.mouseX - 64 + "px", //assuming flower is 128x128px
           top: nn.mouseY - 128 + "px",
-          pointerEvents: "none"
+          pointerEvents: "none", "z-index": "9999"
         })
       
       //after grow time remove countdown
