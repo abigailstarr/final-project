@@ -19,11 +19,11 @@
   
   <script>
     
-    const flowerImages = [
-        "images/flower1.png",
-        "images/flower2.png",
-        "images/flower3.png",
-        "images/flower4.png"
+    const flowerImages = [   "https://icons.iconarchive.com/icons/iconarchive/plasticine/128/Flower-icon.png",
+      "https://icons.iconarchive.com/icons/mag1cwind0w/o-sunny-day/128/osd-flower-icon.png",
+      "https://icons.iconarchive.com/icons/miniartx/gifts-2/128/rose-icon.png",
+      "https://icons.iconarchive.com/icons/iconarchive/wild-camping/128/Flower-Yellow-icon.png",
+      "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/128/Garden-Flower-icon.png"
     ];
     
     function RandomInteger(min, max) {
@@ -43,7 +43,7 @@
       const growTime = RandomInteger(0, 100) * 60 * 1000; // miliseconds to minutes conversion, flower grows for 1-100 minutes
       
       //keep banner on screen for 10 seconds
-      setTimeout(() => banner.remove(), 10000);
+      //setTimeout(() => banner.remove(), 10000);
       
       //add countdown on page
       
@@ -52,20 +52,20 @@
         .set("src", randomFlower)
         .addTo("body")
         .css({
-          width: "100%",
-          height: "100%",
+          width: "128",
+          height: "128",
           position: "absolute",
-          left: nn.mouseX - 50 + "px", //assuming flower is 100x100px
-          top: nn.mouseY - 100 + "px",
+          left: nn.mouseX - 64 + "px", //assuming flower is 128x128px
+          top: nn.mouseY - 128 + "px",
           pointerEvents: "none"
         })
       
       //after grow time remove countdown
       
       // after grow time, replace loading image with flower
-      setTimeout(() => {
-          flower.set("src", randomFlower);
-      }, growTime);
+      //setTimeout(() => {
+          //flower.set("src", randomFlower);
+      //}, growTime);
       
       //display congrats banner
     }
