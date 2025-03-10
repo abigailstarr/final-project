@@ -17,45 +17,44 @@
 <body>
 
   <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
-  
+
   <script>
-    
-    const flowerImages = [   "https://icons.iconarchive.com/icons/iconarchive/plasticine/128/Flower-icon.png",
+    const flowerImages = ["https://icons.iconarchive.com/icons/iconarchive/plasticine/128/Flower-icon.png",
       "https://icons.iconarchive.com/icons/mag1cwind0w/o-sunny-day/128/osd-flower-icon.png",
       "https://icons.iconarchive.com/icons/miniartx/gifts-2/128/rose-icon.png",
       "https://icons.iconarchive.com/icons/iconarchive/wild-camping/128/Flower-Yellow-icon.png",
       "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/128/Garden-Flower-icon.png",
       "https://icons.iconarchive.com/icons/google/noto-emoji-animals-nature/128/22325-sunflower-icon.png",
-    "https://icons.iconarchive.com/icons/fasticon/nature/128/Pink-Flower-icon.png",
-  "https://icons.iconarchive.com/icons/fasticon/nature/128/White-Flower-icon.png"
+      "https://icons.iconarchive.com/icons/fasticon/nature/128/Pink-Flower-icon.png",
+      "https://icons.iconarchive.com/icons/fasticon/nature/128/White-Flower-icon.png"
     ];
-    
+
     const links = [
       "https://abigailstarr.github.io/final-project/",
       "https://abigailstarr.github.io/redesign-IG/",
       "https://abigailstarr.github.io/internet-letter/"
     ];
-    
-    
+
+
     function RandomInteger(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    
-    function addflower () {
+
+    function addflower() {
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
       const randomFlower = flowerImages[randomIndex];
-      
+
       //pick a random link
       randomIndex = Math.floor(Math.random() * links.length)
       const randomLink = links[randomIndex];
-      
+
       //determine a random growing time
       const growTime = RandomInteger(1, 3) * 60 * 1000; // miliseconds to minutes conversion, flower grows for 1-3 minutes
       let remainingTime = growTime / 1000;
-      
+
       //create a banner div
       const banner = document.createElement("div")
       banner.innerText = `You planted a flower! It will bloom in ${Math.floor(remainingTime / 60)} minutes!`;
@@ -67,10 +66,10 @@
       banner.style.color = "green";
       banner.style.padding = "10px 20px";
       banner.style.fontSize = "20px";
-      
+
       // add banner to body
       document.body.appendChild(banner);
-      
+
       //add loading image on the page where the user clicked
       const flower = document.createElement("img");
       flower.src = "https://cdn.pixabay.com/animation/2022/10/02/19/42/19-42-18-109_512.gif";
@@ -83,11 +82,11 @@
       flower.style.top = nn.mouseY - 128 + "px";
       flower.style.cursor = "pointer"; //indicates interactivity
       document.body.appendChild(flower);
-      
+
       //remove after 5 seconds
       setTimeout(() => {
         banner.remove();
-        
+
         //create a countdown div
         const countdown = document.createElement("div");
         countdown.style.position = "fixed";
@@ -99,7 +98,7 @@
         countdown.style.padding = "10px 20px";
         countdown.style.fontSize = "20px";
         document.body.appendChild(countdown);
-      
+
         //create countdown logic
         function updateCountdown() {
           let minutes = Math.floor(remainingTime / 60);
@@ -112,6 +111,10 @@
           } else { //i.e. when timer finishes
             countdown.remove();
             
+            //store flower pos before creating new one
+            const flowerX = flower.style.left;
+            const flowerY = flower.style.top;
+
             // create flower element to replace loading
             const flowerFinal = document.createElement("img");
             flowerFinal.src = randomFlower;
@@ -119,25 +122,25 @@
             flowerFinal.style.width = "128px";
             flowerFinal.style.height = "128px";
             flowerFinal.style.objectFit = "cover";
-            flowerFinal.style.left = flower.style.left;
-            flowerFinal.style.top = flower.style.top;
-            flowerFinal.style.cursor = "pointer";
-            
+            flowerFinal.style.left = flowerX;
+            flowerFinal.style.top = flowerY;      flowerFinal.style.cursor = "pointer";
+
             //define link to random website
             const flowerLink = document.createElement("a");
             flowerLink.href = randomLink;
             flowerLink.target = "_blank";
-            flowerLink.appendChild(flower);
             flowerLink.style.position = "absolute";
-            flowerLink.style.left = flower.style.left;
-            flowerLink.style.top = flower.style.top;
-            
+            flowerLink.style.left = flowerX;
+            flowerLink.style.top = flowerY;
+
             //add link to flower
             flowerLink.appendChild(flowerFinal);
             //remove old flower
             document.body.removeChild(flower);
             //replace flower with linked flower
-            document.body.appendChild(flowerLink);    
+            document.body.appendChild(flowerLink);
+            
+            console.log("Flower added:", flowerFinal);
 
             //define & display congrats banner
             const congrt = document.createElement("div");
@@ -151,20 +154,19 @@
             congrt.style.padding = "10px 20px";
             congrt.style.fontSize = "20px";
             document.body.appendChild(congrt);
-            
+
             //remove congrats banner after 5 seconds
             setTimeout(() => congrt.remove(), 5000);
           }
         }
         updateCountdown();
-      
+
       }, 5000); // wait 5 seconds before initializing countdown
     }
-    
-  window.onload = function () {
-    nn.on("click", addflower);
-  };
 
+    window.onload = function() {
+      nn.on("click", addflower);
+    };
   </script>
-  
+
 </body>
