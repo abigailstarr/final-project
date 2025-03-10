@@ -58,7 +58,7 @@
       
       //create a banner div
       const banner = document.createElement("div")
-      banner.innerText = `You planted a flower! It will bloom in ${growTime} minutes!`;
+      banner.innerText = `You planted a flower! It will bloom in ${Math.floor(remainingTime / 60)} minutes!`;
       banner.style.position = "fixed";
       banner.style.top = "2em";
       banner.style.left = "50%";
@@ -77,7 +77,7 @@
       flower.style.position = "absolute";
       flower.style.width = "128px";
       flower.style.height = "128px";
-      flower.objectFit = "cover";
+      flower.style.objectFit = "cover";
       flower.style.left = nn.mouseX - 64 + "px";
       //assuming flower is 128x128px
       flower.style.top = nn.mouseY - 128 + "px";
@@ -113,8 +113,22 @@
             countdown.remove();
             
             //replace loading image with flower
-            flower.src = randomFlower;          
+            flower.src = randomFlower; 
             
+            //define link to random website
+            const flowerLink = document.createElement("a");
+            flowerLink.href = randomLink;
+            flowerLink.target = "_blank";
+            flowerLink.appendChild(flower);
+            flowerLink.style.position = "absolute";
+            flowerLink.style.left = flower.style.left;
+            flowerLink.style.top = flower.style.top;
+            
+            //add link to flower
+            flowerLink.appendChild(flower);
+            //replace flower with linked flower
+            document.body.appendChild(flowerLink);    
+
             //define & display congrats banner
             const congrt = document.createElement("div");
             congrt.innerText = "🎉 Your flower has bloomed! 🌸";
