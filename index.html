@@ -43,6 +43,9 @@
     }
 
     function addflower() {
+      //grab mouse location
+      const mouseX = nn.mouseX || window.innerWidth / 2;
+      const mouseY = nn.mouseY || window.innerHeight / 2;
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
       const randomFlower = flowerImages[randomIndex];
@@ -77,9 +80,9 @@
       flower.style.width = "128px";
       flower.style.height = "128px";
       flower.style.objectFit = "cover";
-      flower.style.left = nn.mouseX - 64 + "px";
+      flower.style.left = mouseX - 64 + "px";
       //assuming flower is 128x128px
-      flower.style.top = nn.mouseY - 128 + "px";
+      flower.style.top = mouseY - 128 + "px";
       flower.style.cursor = "pointer"; //indicates interactivity
       document.body.appendChild(flower);
 
