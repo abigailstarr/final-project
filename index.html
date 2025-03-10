@@ -126,6 +126,8 @@
             
             //add link to flower
             flowerLink.appendChild(flower);
+            //remove old flower
+            document.body.removeChild(flower);
             //replace flower with linked flower
             document.body.appendChild(flowerLink);    
 
