@@ -30,6 +30,13 @@
   "https://icons.iconarchive.com/icons/fasticon/nature/128/White-Flower-icon.png"
     ];
     
+    const links = [
+      "https://abigailstarr.github.io/final-project/",
+      "https://abigailstarr.github.io/redesign-IG/",
+      "https://abigailstarr.github.io/internet-letter/"
+    ];
+    
+    
     function RandomInteger(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -38,40 +45,96 @@
     
     function addflower () {
       //pick a random flower
-      const randomIndex = Math.floor(Math.random() * flowerImages.length);
+      let randomIndex = Math.floor(Math.random() * flowerImages.length);
       const randomFlower = flowerImages[randomIndex];
       
-      //pick a random href for flower to link to
+      //pick a random link
+      randomIndex = Math.floor(Math.random() * links.length)
+      const randomLink = links[randomIndex];
       
-      const loadingImage = "url"; 
-      const growTime = RandomInteger(0, 100) * 60 * 1000; // miliseconds to minutes conversion, flower grows for 1-100 minutes
+      //determine a random growing time
+      const growTime = RandomInteger(1, 100) * 60 * 1000; // miliseconds to minutes conversion, flower grows for 1-100 minutes
+      let remainingTime = growTime / 1000;
       
-      //keep banner on screen for 10 seconds
-      //setTimeout(() => banner.remove(), 10000);
+      //create a banner div
+      const banner = document.createElement("div")
+      banner.innerText = `You planted a flower! It will bloom in ${growTime} minutes!`;
+      banner.style.position = "fixed";
+      banner.style.top = "2em";
+      banner.style.left = "50%";
+      banner.style.transform = "translateX(-50%)";
+      banner.style.background = "rgba(255, 255, 255, 0.9)";
+      banner.style.color = "green";
+      banner.style.padding = "10px 20px";
+      banner.style.fontsize = "20px";
       
-      //add countdown on page
+      // add banner to body
+      document.body.appendChild(banner);
       
-      //add flower to page depending on where user clicked
-      nn.create("img")
-        .set("src", randomFlower)
-        .addTo("body")
-        .css({
-          width: "128px",
-          height: "128px",
-          position: "absolute",
-          left: nn.mouseX - 64 + "px", //assuming flower is 128x128px
-          top: nn.mouseY - 128 + "px",
-          pointerEvents: "none", "z-index": "9999"
-        })
+      //add loading image on the page where the user clicked
+      const flower = document.createElement("img");
+      flower.src = "https://cdn.pixabay.com/animation/2022/10/02/19/42/19-42-18-109_512.gif";
+      flower.style.position = "absolute";
+      flower.style.width = "128px";
+      flower.style.height = "128px";
+      flower.objectFit = "cover";
+      flower.style.left = nn.mouseX - 64 + "px";
+      //assuming flower is 128x128px
+      flower.style.top = nn.mouseY - 128 + "px";
+      flower.style.cursor = "pointer"; //indicates interactivity
+      document.body.appendChild(flower);
       
-      //after grow time remove countdown
+      //remove after 5 seconds
+      setTimeout(() => {
+        banner.remove();
+        
+        //create a countdown div
+        const countdown = document.createElement("div");
+        countdown.style.position = "fixed";
+        countdown.style.top = "3em";
+        countdown.style.left = "50%";
+        countdown.style.transform = "translateX(-50%)";
+        countdown.style.background = "rgba(255, 255, 255, 0.9)";
+        countdown.style.color = "green";
+        countdown.style.padding = "10px 20px";
+        countdown.style.fontsize = "20px";
+        document.body.appendChild(countdown);
       
-      // after grow time, replace loading image with flower
-      //setTimeout(() => {
-          //flower.set("src", randomFlower);
-      //}, growTime);
+        //create countdown logic
+        function updateCountdown() {
+          let minutes = Math.floor(remainingTime / 60);
+          let seconds = remainingTime % 60;
+          countdown.innerText = `⏳ Flower blooming in ${minutes}:${seconds < 10 ? "0" : ""}${seconds} minutes...`;
+
+          if (remainingTime > 0) {
+            remainingTime--;
+            setTimeout(updateCountdown, 1000);
+          } else { //i.e. when timer finishes
+            countdown.remove();
+            
+            //replace loading image with flower
+            flower.src = randomFlower;          
+            
+            //define & display congrats banner
+            const congrt = document.createElement("div");
+            congrt.innerText = "🎉 Your flower has bloomed! 🌸";
+            congrt.style.position = "fixed";
+            congrt.style.top = "2em";
+            congrt.style.left = "50%";
+            congrt.style.transform = "translateX(-50%)";
+            congrt.style.background = "rgba(255, 255, 255, 0.9)";
+            congrt.style.color = "green";
+            congrt.style.padding = "10px 20px";
+            congrt.style.fontsize = "20px";
+            document.body.appendChild(congrt);
+            
+            //remove congrats banner after 5 seconds
+            setTimeout(() => congrt.remove(), 5000);
+          }
+        }
+        updateCountdown();
       
-      //display congrats banner
+      }, 5000); // wait 5 seconds before initializing countdown
     }
     
     nn.on("click", addflower)
