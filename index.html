@@ -112,8 +112,16 @@
           } else { //i.e. when timer finishes
             countdown.remove();
             
-            //replace loading image with flower
-            flower.src = randomFlower; 
+            // create flower element to replace loading
+            const flowerFinal = document.createElement("img");
+            flowerFinal.src = randomFlower;
+            flowerFinal.style.position = "absolute";
+            flowerFinal.style.width = "128px";
+            flowerFinal.style.height = "128px";
+            flowerFinal.style.objectFit = "cover";
+            flowerFinal.style.left = flower.style.left;
+            flowerFinal.style.top = flower.style.top;
+            flowerFinal.style.cursor = "pointer";
             
             //define link to random website
             const flowerLink = document.createElement("a");
@@ -125,7 +133,7 @@
             flowerLink.style.top = flower.style.top;
             
             //add link to flower
-            flowerLink.appendChild(flower);
+            flowerLink.appendChild(flowerFinal);
             //remove old flower
             document.body.removeChild(flower);
             //replace flower with linked flower
