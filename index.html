@@ -34,6 +34,14 @@
       "https://abigailstarr.github.io/redesign-IG/",
       "https://abigailstarr.github.io/internet-letter/"
     ];
+    
+    //set up mouse position tracking
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    document.addEventListener("mousemove", (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    });
 
 
     function RandomInteger(min, max) {
@@ -44,8 +52,9 @@
 
     function addflower() {
       //grab mouse location
-      const mouseX = nn.mouseX || window.innerWidth / 2;
-      const mouseY = nn.mouseY || window.innerHeight / 2;
+      let clickX = mouseX;
+      let clickY = mouseY;
+      
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
       const randomFlower = flowerImages[randomIndex];
@@ -80,9 +89,9 @@
       flower.style.width = "64px";
       flower.style.height = "64px";
       flower.style.objectFit = "cover";
-      flower.style.left = mouseX - 64 + "px";
+      flower.style.left = clickX - 32 + "px";
       //assuming flower is 128x128px
-      flower.style.top = mouseY - 128 + "px";
+      flower.style.top = clickY - 64 + "px";
       flower.style.cursor = "pointer"; //indicates interactivity
       document.body.appendChild(flower);
 
@@ -166,10 +175,7 @@
 
       }, 5000); // wait 5 seconds before initializing countdown
     }
-
-    window.onload = function() {
-      nn.on("click", addflower);
-    };
+    nn.on("click", addflower)
   </script>
 
 </body>
