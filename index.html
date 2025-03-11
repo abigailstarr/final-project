@@ -52,8 +52,8 @@
 
     function addflower() {
       //grab mouse location
-      let clickX = mouseX;
-      let clickY = mouseY;
+      let clickX = mouseX - 32 + "px";
+      let clickY = mouseY - 64 + "px";
       
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
@@ -89,9 +89,9 @@
       flower.style.width = "64px";
       flower.style.height = "64px";
       flower.style.objectFit = "cover";
-      flower.style.left = clickX - 32 + "px";
+      flower.style.left = clickX;
       //assuming flower is 128x128px
-      flower.style.top = clickY - 64 + "px";
+      flower.style.top = clickY;
       flower.style.cursor = "pointer"; //indicates interactivity
       document.body.appendChild(flower);
 
@@ -123,10 +123,6 @@
           } else { //i.e. when timer finishes
             countdown.remove();
             
-            //store flower pos before creating new one
-            const flowerX = flower.style.left;
-            const flowerY = flower.style.top;
-
             // create flower element to replace loading
             const flowerFinal = document.createElement("img");
             flowerFinal.src = randomFlower;
@@ -134,16 +130,17 @@
             flowerFinal.style.width = "64px";
             flowerFinal.style.height = "64px";
             flowerFinal.style.objectFit = "cover";
-            flowerFinal.style.left = flowerX;
-            flowerFinal.style.top = flowerY;      flowerFinal.style.cursor = "pointer";
+            flowerFinal.style.left = clickX + "px";
+            flowerFinal.style.top = clickY + "px";
+            flowerFinal.style.cursor = "pointer";
 
             //define link to random website
             const flowerLink = document.createElement("a");
             flowerLink.href = randomLink;
             flowerLink.target = "_blank";
             flowerLink.style.position = "absolute";
-            flowerLink.style.left = flowerX;
-            flowerLink.style.top = flowerY;
+            flowerLink.style.left = clickX;
+            flowerLink.style.top = clickY;
 
             //add link to flower
             flowerLink.appendChild(flowerFinal);
