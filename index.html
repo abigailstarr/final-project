@@ -15,9 +15,6 @@
 </head>
 
 <body>
-
-  <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
-
   <script>
     const flowerImages = ["https://icons.iconarchive.com/icons/iconarchive/plasticine/128/Flower-icon.png",
       "https://icons.iconarchive.com/icons/mag1cwind0w/o-sunny-day/128/osd-flower-icon.png",
@@ -34,15 +31,6 @@
       "https://abigailstarr.github.io/redesign-IG/",
       "https://abigailstarr.github.io/internet-letter/"
     ];
-    
-    //set up mouse position tracking
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    document.addEventListener("mousemove", (event) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-    });
-
 
     function RandomInteger(min, max) {
       min = Math.ceil(min);
@@ -52,8 +40,8 @@
 
     function addflower() {
       //grab mouse location
-      let clickX = mouseX - 32;
-      let clickY = mouseY - 64;
+      let clickX = event.clientX - 32;
+      let clickY = event.clientY - 64;
       
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
@@ -173,7 +161,8 @@
 
       }, 5000); // wait 5 seconds before initializing countdown
     }
-    nn.on("click", addflower)
+    
+    document.addEventListener("click", addflower);
   </script>
 
 </body>
