@@ -44,10 +44,14 @@
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    function addflower() {
+    function addflower(event) {
+      
+      console.log("✅ Click detected at:", event.clientX, event.clientY);
+      
       //grab mouse location
-      let clickX = event.clientX - 32;
-      let clickY = event.clientY - 64;
+      const clickX = event.clientX - 32; 
+      const clickY = event.clientY - 64;
+      console.log("✅ Corrected Click Position:", { clickX, clickY });
       
       //pick a random flower
       let randomIndex = Math.floor(Math.random() * flowerImages.length);
@@ -124,8 +128,6 @@
             flowerFinal.style.width = "64px";
             flowerFinal.style.height = "64px";
             flowerFinal.style.objectFit = "cover"; 
-            flowerFinal.style.left = clickX + "px";
-            flowerFinal.style.top = clickY + "px";
             flowerFinal.style.cursor = "pointer";
             flowerFinal.style.zIndex = "9999";
 
@@ -136,6 +138,7 @@
             flowerLink.style.position = "absolute";
             flowerLink.style.left = clickX + "px";
             flowerLink.style.top = clickY + "px";
+            flowerLink.style.display = "block";
 
             //add link to flower
             flowerLink.appendChild(flowerFinal);
