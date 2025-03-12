@@ -93,7 +93,7 @@
       flowerFinal.style.position = "absolute";
       flowerFinal.style.maxWidth = "100px";
       flowerFinal.style.maxHeight = "100px";
-      flowerFinal.style.objectFit = "contain"; 
+      flowerFinal.style.objectFit = "contain";
       flowerFinal.style.cursor = "pointer";
 
       const flowerLink = document.createElement("a");
@@ -106,7 +106,7 @@
 
       flowerLink.appendChild(flowerFinal);
       document.body.appendChild(flowerLink);
-      
+
       return flowerFinal;
     }
 
@@ -251,17 +251,18 @@
     window.onload = function() {
 
       //load in lofi background music
-      const lofiMusic = new Audio("https://www.bensound.com/bensound-music/bensound-lofi.mp3");
+      const lofiMusic = new Audio("lofi.mp3");
       lofiMusic.loop = true;
-      lofiMusic.volume = 0.4;
+      lofiMusic.volume = 0.1;
 
       // load in garden sounds (birds & wind)
-      const gardenSounds = new Audio("https://www.soundjay.com/nature/sounds/birds-forest-1.mp3");
+      const gardenSounds = new Audio("ambiance.mp3");
       gardenSounds.loop = true;
-      gardenSounds.volume = 0.2;
-    
+      gardenSounds.volume = 1;
+
       //create a function to toggle the music on and off
       let isPlaying = false;
+
       function toggleMusic() {
         if (isPlaying) {
           lofiMusic.pause();
@@ -272,7 +273,7 @@
         }
         isPlaying = !isPlaying;
       }
-      
+
       function enableAudio() {
         if (!isPlaying) {
           toggleMusic();
@@ -285,7 +286,7 @@
       document.addEventListener("click", enableAudio);
       document.addEventListener("keydown", enableAudio);
       document.addEventListener("mousemove", enableAudio);
-      
+
       const musicButton = document.createElement("button");
       musicButton.innerText = "🎵 Toggle Music";
       musicButton.style.position = "fixed";
@@ -305,7 +306,7 @@
         toggleMusic();
       });
       document.body.appendChild(musicButton);
-      
+
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
       savedFlowers.forEach(flower => {
