@@ -35,6 +35,32 @@
     .growing-flower {
       animation: reveal 4s ease-in-out forwards;
     }
+
+
+    @keyframes fly-across {
+      0% {
+        transform: translateX(-10vw) translateY(0);
+      }
+
+      50% {
+        transform: translateX(50vw) translateY(-30px);
+      }
+
+      100% {
+        transform: translateX(110vw) translateY(10px);
+      }
+    }
+
+    .butterfly {
+      object-fit: contain;
+      max-width: 32px;
+      max-height: 32px;
+      position: absolute;
+      top: `${Math.random() * 80 + 10}` + "vh";
+      left: -10vw;
+      animation: fly-across 12s linear infinite;
+      pointer-events: none;
+    }
   </style>
 
 </head>
@@ -47,10 +73,6 @@
       "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/128/Garden-Flower-icon.png",
       "https://icons.iconarchive.com/icons/fasticon/nature/128/Pink-Flower-icon.png",
       "https://icons.iconarchive.com/icons/fasticon/nature/128/White-Flower-icon.png",
-      "https://cdn.creazilla.com/cliparts/12973/yellow-tulip-clipart-xl.png",
-      "https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Flowers-PNG/Peony_with_Stem_PNG_Clipart.png?m=1629800297",
-      "https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Flowers-PNG/Red_Gerber_with_Stem_PNG_Clipart_Image.png?m=1629799612",
-
       "https://cdn.creazilla.com/cliparts/3158730/flower-clipart-md.png",
 
       "https://www.pngfind.com/pngs/m/70-703042_stem-pink-orchids-png-clipart-orchid-flower-clipart.png",
@@ -58,8 +80,6 @@
       "https://clipart-library.com/images/yikr446iE.png",
 
       "https://clipart-library.com/img/1721927.png"
-
-
     ];
 
     const links = [
@@ -316,7 +336,18 @@
       document.body.appendChild(resetButton);
     };
 
+    function createButterfly() {
+      const butterfly = document.createElement("img");
+      butterfly.src = "https://www.icegif.com/wp-content/uploads/2022/08/icegif-1262.gif";
+      butterfly.classList.add("butterfly");
+      butterfly.style.setProperty("--random-y", Math.random());
+      document.body.appendChild(butterfly);
+      setTimeout(() => butterfly.remove(), 10000);
+    }
+
     document.addEventListener("click", addflower);
+    setInterval(createButterfly, 10000);
+    
   </script>
 
 </body>
