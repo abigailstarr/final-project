@@ -219,12 +219,12 @@
 
       }, 5000); // wait 5 seconds before initializing countdown
     }
-    
+
     function clearGarden() {
-      localStorage.removeItem("flowers"); 
+      localStorage.removeItem("flowers");
       document.querySelectorAll("a").forEach(flower => flower.remove());
     }
-    
+
     const resetButton = document.createElement("button");
     resetButton.innerText = "🗑️ Reset Garden";
     resetButton.style.position = "fixed";
@@ -238,15 +238,46 @@
     resetButton.style.border = "none";
     resetButton.style.borderRadius = "5px";
     resetButton.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.2)";
-    resetButton.addEventListener("click", clearGarden);
+    //make sure that clicking reset doesn't trigger another flower planting
+    resetButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      clearGarden();
+    });
 
     window.onload = function() {
+
+      //load in lofi background music
+      const lofiMusic = new Audio("https://www.bensound.com/bensound-music/bensound-lofi.mp3");
+      lofiMusic.loop = true;
+      lofiMusic.volume = 0.4;
+
+      // load in garden sounds (birds & wind)
+      const gardenSounds = new Audio("https://www.soundjay.com/nature/sounds/birds-forest-1.mp3");
+      gardenSounds.loop = true;
+      gardenSounds.volume = 0.2;
+
+      //create function that still plays audio even if the browser has autoplay blocked
+      function playAudio() {
+        lofiMusic.play().catch(() => {
+          document.addEventListener("mousemove", () => lofiMusic.play(), {
+            one: true
+          });
+        });
+
+        gardenSounds.play().catch(() => {
+          document.addEventListener("mousemove", () => gardenSounds.play(), {
+            once: true
+          });
+        });
+      }
+      playAudio();
+
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
       savedFlowers.forEach(flower => {
         recreateFlower(flower.x, flower.x, flower.img, flower.link)
       });
-      
+
       document.body.appendChild(resetButton);
     };
 
