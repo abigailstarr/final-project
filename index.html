@@ -219,6 +219,26 @@
 
       }, 5000); // wait 5 seconds before initializing countdown
     }
+    
+    function clearGarden() {
+      localStorage.removeItem("flowers"); 
+      document.querySelectorAll("a").forEach(flower => flower.remove());
+    }
+    
+    const resetButton = document.createElement("button");
+    resetButton.innerText = "🗑️ Reset Garden";
+    resetButton.style.position = "fixed";
+    resetButton.style.bottom = "10px";
+    resetButton.style.right = "10px";
+    resetButton.style.padding = "10px";
+    resetButton.style.fontSize = "16px";
+    resetButton.style.cursor = "pointer";
+    resetButton.style.background = "red";
+    resetButton.style.color = "white";
+    resetButton.style.border = "none";
+    resetButton.style.borderRadius = "5px";
+    resetButton.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.2)";
+    resetButton.addEventListener("click", clearGarden);
 
     window.onload = function() {
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
@@ -226,6 +246,8 @@
       savedFlowers.forEach(flower => {
         recreateFlower(flower.x, flower.x, flower.img, flower.link)
       });
+      
+      document.body.appendChild(resetButton);
     };
 
     document.addEventListener("click", addflower);
