@@ -18,16 +18,14 @@
     
     @keyframes reveal {
       0% {
-        mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 1) 100%);
-        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 1) 100%);
+        clip-path: inset(95% 0% 0% 0%);
         opacity: 0;
       }
       20% {
         opacity: 1;
       }
       100% {
-        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
-        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+        clip-path: inset(0% 0% 0% 0%);
       }
     }
 
