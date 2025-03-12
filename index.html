@@ -267,8 +267,8 @@
           lofiMusic.pause();
           gardenSounds.pause();
         } else {
-          lofiMusic.play().catch(() => console.log("Autoplay blocked"));
-          gardenSounds.play().catch(() => console.log("Autoplay blocked"));
+          lofiMusic.play().catch(err => console.log("Autoplay blocked:", err));
+          gardenSounds.play().catch(err => console.log("Autoplay blocked:", err));
         }
         isPlaying = !isPlaying;
       }
@@ -277,16 +277,22 @@
         if (!isPlaying) {
           toggleMusic();
           document.removeEventListener("click", enableAudio);
+          document.removeEventListener("keydown", enableAudio);
+          document.removeEventListener("mousemove", enableAudio);
         }
       }
 
-      document.addEventListener("click", enableAudio); 
+      document.addEventListener("click", enableAudio);
+      document.addEventListener("keydown", enableAudio);
+      document.addEventListener("mousemove", enableAudio);
+      
       const musicButton = document.createElement("button");
       musicButton.innerText = "🎵 Toggle Music";
       musicButton.style.position = "fixed";
       musicButton.style.bottom = "50px";
       musicButton.style.right = "10px";
       musicButton.style.padding = "10px";
+      musicButton.style.margin = "0px 0px 10px 0px";
       musicButton.style.fontSize = "16px";
       musicButton.style.cursor = "pointer";
       musicButton.style.background = "blue";
@@ -294,10 +300,12 @@
       musicButton.style.border = "none";
       musicButton.style.borderRadius = "5px";
       musicButton.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.2)";
-
-      musicButton.addEventListener("click", toggleMusic);
+      musicButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleMusic();
+      });
       document.body.appendChild(musicButton);
-
+      
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
       savedFlowers.forEach(flower => {
