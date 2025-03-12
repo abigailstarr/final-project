@@ -87,6 +87,7 @@
 
     function recreateFlower(x, y, img, link) {
       const flowerFinal = document.createElement("img");
+      flowerFinal.src = img;
       flowerFinal.style.position = "absolute";
       flowerFinal.style.width = "64px";
       flowerFinal.style.height = "64px";
@@ -260,7 +261,7 @@
       function playAudio() {
         lofiMusic.play().catch(() => {
           document.addEventListener("mousemove", () => lofiMusic.play(), {
-            one: true
+            once: true
           });
         });
 
@@ -275,7 +276,7 @@
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
       savedFlowers.forEach(flower => {
-        recreateFlower(flower.x, flower.x, flower.img, flower.link)
+        recreateFlower(flower.x, flower.y, flower.img, flower.link)
       });
 
       document.body.appendChild(resetButton);
