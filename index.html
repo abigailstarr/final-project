@@ -106,6 +106,8 @@
 
       flowerLink.appendChild(flowerFinal);
       document.body.appendChild(flowerLink);
+      
+      return flowerFinal;
     }
 
 
@@ -270,20 +272,31 @@
         }
         isPlaying = !isPlaying;
       }
-
-      //create function that still plays audio even if the browser has autoplay blocked
-      function playAudio() {
-        toggleMusic();
-        
-        document.addEventListener("keydown", (event) => {
-        if (event.code === "Space") {
-          event.preventDefault();
-          toggleMusic();
-          }
-        });
-      }
       
-      playAudio();
+      function enableAudio() {
+        if (!isPlaying) {
+          toggleMusic();
+          document.removeEventListener("click", enableAudio);
+        }
+      }
+
+      document.addEventListener("click", enableAudio); 
+      const musicButton = document.createElement("button");
+      musicButton.innerText = "🎵 Toggle Music";
+      musicButton.style.position = "fixed";
+      musicButton.style.bottom = "50px";
+      musicButton.style.right = "10px";
+      musicButton.style.padding = "10px";
+      musicButton.style.fontSize = "16px";
+      musicButton.style.cursor = "pointer";
+      musicButton.style.background = "blue";
+      musicButton.style.color = "white";
+      musicButton.style.border = "none";
+      musicButton.style.borderRadius = "5px";
+      musicButton.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.2)";
+
+      musicButton.addEventListener("click", toggleMusic);
+      document.body.appendChild(musicButton);
 
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
