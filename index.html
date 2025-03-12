@@ -87,11 +87,13 @@
 
     function recreateFlower(x, y, img, link) {
       const flowerFinal = document.createElement("img");
+      flowerFinal.classList.add("growing-flower", "bloomed-flower");
       flowerFinal.src = img;
       flowerFinal.style.position = "absolute";
-      flowerFinal.style.width = "64px";
-      flowerFinal.style.height = "64px";
-      flowerFinal.style.objectFit = "cover";
+      flowerFinal.style.position = "absolute";
+      flowerFinal.style.maxWidth = "100px";
+      flowerFinal.style.maxHeight = "100px";
+      flowerFinal.style.objectFit = "contain"; 
       flowerFinal.style.cursor = "pointer";
 
       const flowerLink = document.createElement("a");
@@ -194,7 +196,6 @@
 
             saveFlower(clickX, clickY, randomFlower, randomLink);
             const flowerFinal = recreateFlower(clickX, clickY, randomFlower, randomLink);
-            flowerFinal.classList.add("growing-flower", "bloomed-flower");
             flowerFinal.addEventListener("click", function(event) {
               event.stopPropagation();
             });
@@ -256,21 +257,32 @@
       const gardenSounds = new Audio("https://www.soundjay.com/nature/sounds/birds-forest-1.mp3");
       gardenSounds.loop = true;
       gardenSounds.volume = 0.2;
+    
+      //create a function to toggle the music on and off
+      let isPlaying = false;
+      function toggleMusic() {
+        if (isPlaying) {
+          lofiMusic.pause();
+          gardenSounds.pause();
+        } else {
+          lofiMusic.play().catch(() => console.log("Autoplay blocked"));
+          gardenSounds.play().catch(() => console.log("Autoplay blocked"));
+        }
+        isPlaying = !isPlaying;
+      }
 
       //create function that still plays audio even if the browser has autoplay blocked
       function playAudio() {
-        lofiMusic.play().catch(() => {
-          document.addEventListener("mousemove", () => lofiMusic.play(), {
-            once: true
-          });
-        });
-
-        gardenSounds.play().catch(() => {
-          document.addEventListener("mousemove", () => gardenSounds.play(), {
-            once: true
-          });
+        toggleMusic();
+        
+        document.addEventListener("keydown", (event) => {
+        if (event.code === "Space") {
+          event.preventDefault();
+          toggleMusic();
+          }
         });
       }
+      
       playAudio();
 
       const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
