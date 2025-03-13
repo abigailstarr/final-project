@@ -55,9 +55,6 @@
       object-fit: contain;
       max-width: 32px;
       max-height: 32px;
-      position: absolute;
-      top: `${Math.random() * 80 + 10}` + "vh";
-      left: -10vw;
       animation: fly-across 12s linear infinite;
       pointer-events: none;
     }
@@ -340,13 +337,28 @@
       const butterfly = document.createElement("img");
       butterfly.src = "https://www.icegif.com/wp-content/uploads/2022/08/icegif-1262.gif";
       butterfly.classList.add("butterfly");
-      butterfly.style.setProperty("--random-y", Math.random());
+      
+      butterfly.style.position = "absolute";
+      butterfly.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+      butterfly.style.left = "-50px";
+      
+      butterfly.animate([
+        { transform: `translateX(-10vw) translateY(0px)` },
+        { transform: `translateX(30vw) translateY(${Math.random() * 40 - 20}px)`}, 
+        { transform: `translateX(60vw) translateY(${Math.random() * 40 - 20}px)`}, 
+        { transform: `translateX(110vw) translateY(${Math.random() * 40 - 20}px)`}
+      ], {
+        duration: 15000,
+        iterations: 1,
+        easing: "linear"
+      });
+      
       document.body.appendChild(butterfly);
-      setTimeout(() => butterfly.remove(), 10000);
+      setTimeout(() => butterfly.remove(), 15000);
     }
 
     document.addEventListener("click", addflower);
-    setInterval(createButterfly, 10000);
+    setInterval(createButterfly, 12000);
     
   </script>
 
