@@ -6,8 +6,23 @@
       max-width: 64px;
       max-height: 64px;
       object-fit: contain;
+      position: absolute;
+      z-index: 10;
     }
-
+    
+    .bee {
+      z-index: 20;
+      position: absolute;
+    }
+    
+    .butterfly {
+      object-fit: contain;
+      max-width: 32px;
+      max-height: 32px;
+      pointer-events: none;
+      position: absolute;
+      z-index: 20;
+    }
 
     @media (max-width: 768px) {
       .bloomed-flower {
@@ -32,11 +47,6 @@
       background-size: cover;
     }
 
-    img {
-      position: absolute;
-      z-index: 9999;
-    }
-
     @keyframes reveal {
       0% {
         clip-path: inset(95% 0% 0% 0%);
@@ -55,13 +65,6 @@
     .growing-flower {
       animation: reveal 4s ease-in-out forwards;
       will-change: transform;
-    }
-
-    .butterfly {
-      object-fit: contain;
-      max-width: 32px;
-      max-height: 32px;
-      pointer-events: none;
     }
   </style>
 
@@ -108,9 +111,9 @@
       localStorage.setItem("flowers", JSON.stringify(savedFlowers));
     }
 
-    function recreateFlower(x, y, img, link) {
-      const xPercent = (x * window.innerWidth) / 100;
-      const yPercent = (y * window.innerHeight) / 100;
+    function recreateFlower(xPercent, yPercent, img, link) {
+      const x = (xPercent * window.innerWidth) / 100;
+      const y = (yPercent * window.innerHeight) / 100;
 
       const flowerFinal = document.createElement("img");
       flowerFinal.classList.add("growing-flower", "bloomed-flower");
@@ -173,7 +176,7 @@
       document.body.appendChild(banner);
 
       //add loading image on the page where the user clicked
-      const can = document.createElement("gif");
+      const can = document.createElement("img");
       can.src = "https://media4.giphy.com/media/m9jBQWzSGGV4g4ybou/giphy.gif?cid=6c09b952kr57ud2hlj1m8jxlkb8odndtm5c3z9wlalsjucgw&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s";
       can.style.position = "absolute";
       can.style.width = "64px";
@@ -350,8 +353,8 @@
         const savedFlowers = JSON.parse(localStorage.getItem("flowers")) || [];
 
         savedFlowers.forEach(flower => {
-          const xPercent = flower.xPercent !== undefined ? flower.xPercent : (flower.x / window.innerWidth) * 100;
-          const yPercent = flower.yPercent !== undefined ? flower.yPercent : (flower.y / window.innerHeight) * 100;
+          const xPercent = flower.xPercent;
+          const yPercent = flower.yPercent;
 
           const flowerElement = recreateFlower(xPercent, yPercent, flower.img, flower.link)
           flowerElement.addEventListener("click", function(event) {
@@ -404,6 +407,7 @@
         function createBee() {
           const bee = document.createElement("img");
           bee.src = "https://cloudworld.neocities.org/garden/beeunit.gif";
+          bee.classList.add("bee");
           bee.style.position = "absolute";
           bee.style.width = "40px";
           bee.style.pointerEvents = "none";
